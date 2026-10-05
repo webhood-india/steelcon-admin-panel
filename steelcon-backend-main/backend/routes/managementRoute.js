@@ -1,0 +1,14 @@
+import express from "express";
+import { requireAuth, allowRoles } from "../middlewares/authMiddleware.js";
+import * as c from "../controllers/managementController.js";
+const r=express.Router();r.use(requireAuth);
+r.get("/announcements",c.listAnnouncements);r.post("/announcements",allowRoles("admin","manager"),c.createAnnouncement);r.put("/announcements/:id",allowRoles("admin","manager"),c.updateAnnouncement);r.delete("/announcements/:id",allowRoles("admin"),c.deleteAnnouncement);
+r.get("/manpower",c.listManpower);r.post("/manpower",allowRoles("admin","manager"),c.createManpower);r.put("/manpower/:id",allowRoles("admin"),c.updateManpower);r.delete("/manpower/:id",allowRoles("admin"),c.deleteManpower);
+r.get("/resignations",c.listResignations);r.post("/resignations",allowRoles("admin","employee"),c.createResignation);r.put("/resignations/:id",allowRoles("admin","manager"),c.reviewResignation);
+r.get("/support",c.listSupport);r.post("/support",c.createSupport);r.put("/support/:id",allowRoles("admin"),c.updateSupport);
+r.get("/training",c.listTraining);r.post("/training",allowRoles("admin"),c.createTraining);r.put("/training/:id",allowRoles("admin"),c.updateTraining);r.delete("/training/:id",allowRoles("admin"),c.deleteTraining);
+r.get("/policies",c.listPolicies);r.post("/policies",allowRoles("admin"),c.createPolicy);r.put("/policies/:id",allowRoles("admin"),c.updatePolicy);r.delete("/policies/:id",allowRoles("admin"),c.deletePolicy);
+r.get("/offers",c.listOffers);r.post("/offers",allowRoles("admin"),c.createOffer);r.put("/offers/:id",allowRoles("admin"),c.updateOffer);r.delete("/offers/:id",allowRoles("admin"),c.deleteOffer);
+r.get("/discipline",c.listDiscipline);r.post("/discipline",allowRoles("admin","manager"),c.createDiscipline);r.put("/discipline/:id",allowRoles("admin","manager"),c.updateDiscipline);r.delete("/discipline/:id",allowRoles("admin"),c.deleteDiscipline);
+r.get("/referrals",c.listReferrals);r.post("/referrals",c.createReferral);r.put("/referrals/:id",allowRoles("admin","manager"),c.updateReferral);r.delete("/referrals/:id",allowRoles("admin"),c.deleteReferral);
+export default r;
